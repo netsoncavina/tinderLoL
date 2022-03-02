@@ -9,5 +9,10 @@
     "start": "node server.js"
   },
   "author": "Netson Cavina",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.3",
+    "mongoose": "^6.2.4"
+  }
 }
