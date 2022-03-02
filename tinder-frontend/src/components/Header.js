@@ -13,7 +13,7 @@ function Header() {
 
       <img
         className="header--logo"
-        src="https://1000logos.net/wp-content/uploads/2018/07/tinder-emblem.jpg"
+        src="https://static.wikia.nocookie.net/lolesports_gamepedia_en/images/3/32/CBLOL_2021_Logo.png/"
         alt="Tinder Logo"
       />
       <IconButton>
