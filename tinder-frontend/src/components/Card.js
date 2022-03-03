@@ -3,6 +3,7 @@ import TinderCard from "react-tinder-card";
 import "./styles/Card.css";
 
 function Card() {
+  const [choices, setChoices] = useState([]);
   const [people, setPeople] = useState([
     {
       name: "Drop",
@@ -50,16 +51,30 @@ function Card() {
       url: "https://pbs.twimg.com/media/FGxjJmxXsAQI4YW?format=jpg&name=medium",
       team: "Red Canids",
     },
+    {
+      name: "TitaS",
+      url: "https://pbs.twimg.com/media/FGxjJmxXsAQI4YW?format=jpg&name=medium",
+      team: "Red Canids",
+    },
   ]);
 
-  const swiped = (direction, nameToDelete) => {
-    console.log("removing: " + nameToDelete, direction);
-    // setLastDirection(direction);
-  };
+  function checkWinner(array) {
+    if (array.length === 10) {
+      return "You win!";
+    } else {
+      return "Keep playing!";
+    }
+  }
+  function swiped(direction, name, team) {
+    // console.log("removing: " + name, direction);
+    if (direction == "right") {
+      choices.push(team);
+      console.log(checkWinner(choices));
+    }
+    console.log(choices);
+  }
 
-  const outOfFrame = (name) => {
-    // console.log(name + " left the screen!");
-  };
+  const outOfFrame = (name) => {};
 
   return (
     <div className="tinderCards">
@@ -69,7 +84,7 @@ function Card() {
             className="swipe"
             key={person.name}
             preventSwipe={["up", "down"]}
-            onSwipe={(dir) => swiped(dir, person.name)}
+            onSwipe={(dir) => swiped(dir, person.name, person.team)}
             onCardLeftScreen={() => outOfFrame(person.name)}
           >
             <div
