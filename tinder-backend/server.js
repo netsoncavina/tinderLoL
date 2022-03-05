@@ -1,46 +1,32 @@
-import express from "express";
-import mongoose from "mongoose";
-import Cors from "cors";
-import Cards from "./dbCards.js";
-// App config
+const express = require("express");
+const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
+const cors = require("cors");
 const app = express();
-const port = process.env.PORT || 8001;
-const password = "HJOKj3SsuPlvmp7V";
-const user = "netson";
-const connection_url = `mongodb+srv://netson:HJOKj3SsuPlvmp7V>@cluster0.e3ugm.mongodb.net/tinderdb?retryWrites=true&w=majority`;
+require("dotenv/config");
+app.use(bodyParser.json());
+app.use(cors());
 
-// Middlewares
-app.use(express.json());
-app.use(Cors());
-// DB config
-mongoose.connect(connection_url, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useCreateIndex: true,
+// Import routes
+const usersRoute = require("./routes/users");
+
+// Middleware
+app.use("/users", usersRoute);
+
+app.get("/", (req, res) => {
+  res.send("Helloooow");
 });
 
-// API endpoints
-app.get("/", (req, res) => res.status(200).send("TESTE"));
-
-app.post("/tinder/cards/", (req, res) => {
-  const dbCard = req.body;
-  Cards.create(dbCard, (err, data) => {
-    if (err) {
-      res.status(500).send(err);
-    } else {
-      res.status(201).send(data);
-    }
-  });
+// Connect to MongoDB
+mongoose.connect(process.env.DB_CONNECTION, (err) => {
+  if (err) {
+    console.log(err);
+  } else {
+    console.log("Connected to MongoDB");
+  }
 });
 
-app.get("/tinder/cards/", (req, res) => {
-  Cards.find((err, data) => {
-    if (err) {
-      res.status(500).send(err);
-    } else {
-      res.status(200).send(data);
-    }
-  });
+// Start server
+app.listen(3000, () => {
+  console.log("Server started on port 3000");
 });
-// Listener
-app.listen(port, () => console.log(`Listening on port ${port}`));
